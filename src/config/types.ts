@@ -16,6 +16,7 @@ export interface SocialLinks {
   instagram?: string;
   youtube?: string;
   website?: string;
+  wiki?: string;
 }
 
 /** Architecture-specific executable paths for a game version */

@@ -2,9 +2,9 @@ import "./TwitchStreams.css";
 
 /** Placeholder stream data with OTServ-realistic channel names */
 const PLACEHOLDER_STREAMS = [
-  { channel: "TibiaKing", game: "Rubinot", viewers: "3.2K", live: true },
+  { channel: "ExordionTV", game: "Exordion", viewers: "3.2K", live: true },
   { channel: "OTServ_Brasil", game: "MasterCores", viewers: "1.8K", live: true },
-  { channel: "RubinPVP", game: "Rubinot", viewers: "945", live: true },
+  { channel: "BravoraPVP", game: "Exordion", viewers: "945", live: true },
   { channel: "HuntMaster_OT", game: "DeusOT", viewers: "721", live: true },
 ];
 

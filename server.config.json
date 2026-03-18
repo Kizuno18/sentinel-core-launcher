@@ -1,8 +1,8 @@
 {
   "server": {
-    "name": "Rubinot",
+    "name": "Exordion",
     "logo": "./assets/server-logo.png",
-    "accentColor": "#ff8c00",
+    "accentColor": "#f5a623",
     "game": {
       "basePath": "./otclient",
       "versions": [
@@ -26,36 +26,50 @@
       "defaultVersion": "dx9",
       "checksums": {
         "enabled": true,
-        "manifestUrl": "https://rubinot.com/api/checksums.json"
+        "manifestUrl": "https://bravora.exordion.com.br/api/checksums.json"
       }
     },
     "socials": {
-      "discord": "https://discord.gg/rubinot",
-      "instagram": "https://instagram.com/rubinot",
-      "youtube": "https://youtube.com/@rubinot",
-      "website": "https://rubinot.com"
+      "discord": "https://discord.com/invite/K9RF9pCfvC",
+      "youtube": "https://www.youtube.com/@exordion",
+      "website": "https://bravora.exordion.com.br/?home",
+      "wiki": "https://exordion.gitbook.io/exordion-wiki/"
     },
     "news": [
       {
         "id": "1",
-        "title": "New Update v4.2 — Monster Rebalance",
-        "description": "Monster density reduced in Bloodfire Gorge. Undead Elite Gladiator XP increased from 5090 to 5700.",
+        "title": "Exordion is Now Live — Bravora Launched!",
+        "description": "The day has come: Exordion opens today. Join hundreds of players exploring Bravora. New hunting grounds, bosses, and PvP arenas await!",
         "image": "",
-        "date": "2026-03-15"
+        "date": "2026-03-11"
       },
       {
         "id": "2",
-        "title": "PvP Season 3 — Registration Open",
-        "description": "Join the new competitive PvP season with exclusive rewards. Top 10 players earn unique outfits.",
+        "title": "Final Countdown — Bravora Opens Tomorrow!",
+        "description": "1 day left until the grand opening of Bravora. Make sure to download the latest client and prepare your characters!",
         "image": "",
         "date": "2026-03-10"
       },
       {
         "id": "3",
-        "title": "New Area: Crystal Caverns",
-        "description": "Explore the new Crystal Caverns hunting ground. Recommended level 250+. New creatures and loot tables.",
+        "title": "Bravora Opens March 11 — Are You Ready?",
+        "description": "Pre-registration is now open. Create your account and secure your character name for the launch of Bravora on March 11.",
         "image": "",
-        "date": "2026-03-05"
+        "date": "2026-02-21"
+      },
+      {
+        "id": "4",
+        "title": "Daily Bosses & Crafting Systems Revealed",
+        "description": "Discover the new Daily Boss system with unique drop tables and the Crafting & Rarity system. Check the wiki for full details.",
+        "image": "",
+        "date": "2026-02-15"
+      },
+      {
+        "id": "5",
+        "title": "Exordion Wiki — Spells, Runes & Systems",
+        "description": "The full Exordion wiki is up with detailed guides on spells, runes, daily bosses, crafting, and the rarity system.",
+        "image": "",
+        "date": "2026-02-10"
       }
     ]
   },
