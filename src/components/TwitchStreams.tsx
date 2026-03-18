@@ -1,11 +1,11 @@
 import "./TwitchStreams.css";
 
-/** Placeholder stream data with OTServ-realistic channel names */
+/** Placeholder stream data — real Exordion Twitch streamers */
 const PLACEHOLDER_STREAMS = [
-  { channel: "ExordionTV", game: "Exordion", viewers: "3.2K", live: true },
-  { channel: "OTServ_Brasil", game: "MasterCores", viewers: "1.8K", live: true },
-  { channel: "BravoraPVP", game: "Exordion", viewers: "945", live: true },
-  { channel: "HuntMaster_OT", game: "DeusOT", viewers: "721", live: true },
+  { channel: "ITSMANOJAVA", game: "Exordion", viewers: "3.2K", live: true },
+  { channel: "BELTRANCTZ", game: "Exordion", viewers: "1.8K", live: true },
+  { channel: "TUTEX74", game: "Exordion", viewers: "945", live: true },
+  { channel: "BOMBALOVE", game: "Exordion", viewers: "721", live: true },
 ];
 
 /**
