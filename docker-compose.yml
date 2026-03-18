@@ -1,0 +1,20 @@
+# Sentinel Core Launcher — Docker Compose for development
+# Note: Tauri desktop builds require native Rust compilation on the host.
+# This Docker setup runs only the Vite frontend dev server for UI development.
+
+services:
+  frontend-dev:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "1420:1420"
+    volumes:
+      # Mount source for hot reload, but keep node_modules inside container
+      - ../src:/app/src
+      - ../index.html:/app/index.html
+      - ../server.config.json:/app/server.config.json
+      - ../public:/app/public
+    environment:
+      - NODE_ENV=development
+    restart: unless-stopped

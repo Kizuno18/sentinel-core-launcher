@@ -1,0 +1,139 @@
+/* ==========================================================================
+   Launch Bar — Bottom bar with version selector + LAUNCH GAME button
+   ========================================================================== */
+
+.launch-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  padding: var(--space-lg) var(--space-xl);
+  background: var(--bg-secondary);
+  border-top: 1px solid rgba(0, 240, 255, 0.08);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  animation: fade-in 0.4s ease;
+}
+
+/* ---------- Launch Button ---------- */
+.launch-button {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-2xl);
+  background: linear-gradient(135deg, #00c8d4, #0088ff);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  box-shadow:
+    0 0 20px rgba(0, 200, 212, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.launch-button::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--sentinel-border), #0088ff, var(--sentinel-border));
+  z-index: -1;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.launch-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 30px rgba(0, 200, 212, 0.5),
+    0 0 60px rgba(0, 200, 212, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.launch-button:hover:not(:disabled)::before {
+  opacity: 1;
+}
+
+.launch-button:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+.launch-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.launch-button.launching {
+  animation: pulse-glow 1s ease-in-out infinite;
+}
+
+/* Verifying state — dimmed with pulsing border */
+.launch-button.verifying {
+  background: linear-gradient(135deg, #1a3a4a, #0a2a3a);
+  border-color: rgba(0, 240, 255, 0.15);
+  box-shadow: 0 0 10px rgba(0, 200, 212, 0.1);
+  animation: glow-border 2s ease-in-out infinite;
+}
+
+.launch-spinner {
+  animation: none; /* animation handled by SVG animateTransform */
+}
+
+/* ---------- Progress Section ---------- */
+.launch-progress-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.launch-progress-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.launch-progress-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.launch-progress-percent {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--sentinel-border);
+  font-family: var(--font-mono);
+}
+
+.launch-progress-bar {
+  height: 4px;
+  background: rgba(0, 240, 255, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.launch-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--sentinel-border), #0088ff);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+  box-shadow: 0 0 8px var(--sentinel-glow);
+}
+
+/* ---------- Sentinel Watermark ---------- */
+.launch-sentinel-mark {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: 10px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  opacity: 0.6;
+}

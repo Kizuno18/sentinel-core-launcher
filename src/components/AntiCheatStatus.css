@@ -1,0 +1,60 @@
+/* ==========================================================================
+   Anti-Cheat Status — Shield panel (Sentinel Core FIXED)
+   ========================================================================== */
+
+.anticheat-status {
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  text-align: center;
+  animation: slide-in-right 0.4s ease;
+}
+
+.anticheat-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+}
+
+.anticheat-shield-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.anticheat-shield {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.anticheat-shield.active {
+  animation: shield-pulse 2s ease-in-out infinite;
+}
+
+.anticheat-shield.scanning {
+  animation: shield-pulse 1s ease-in-out infinite;
+}
+
+.anticheat-label {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  font-family: var(--font-mono);
+}
+
+.anticheat-sublabel {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+}

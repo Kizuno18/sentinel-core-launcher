@@ -1,0 +1,86 @@
+/* ==========================================================================
+   Version Selector — Dropdown + Architecture badge
+   ========================================================================== */
+
+.version-selector {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.version-selector-single {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.version-select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.version-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--bg-card);
+  border: 1px solid rgba(0, 240, 255, 0.12);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+  font-size: 12px;
+  font-weight: 600;
+  padding: var(--space-sm) var(--space-2xl) var(--space-sm) var(--space-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  outline: none;
+  min-width: 120px;
+}
+
+.version-select:hover:not(:disabled) {
+  border-color: rgba(0, 240, 255, 0.25);
+  box-shadow: 0 0 8px var(--sentinel-glow);
+}
+
+.version-select:focus {
+  border-color: var(--sentinel-border);
+  box-shadow: 0 0 12px var(--sentinel-glow);
+}
+
+.version-select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.version-select option {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  padding: var(--space-sm);
+}
+
+.version-chevron {
+  position: absolute;
+  right: var(--space-sm);
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+
+.version-arch-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--sentinel-border);
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+}
+
+.version-label-text {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}

@@ -1,0 +1,107 @@
+# Sentinel Core Launcher — Multi-platform build & release
+# Builds Windows .exe, Linux AppImage/deb, and macOS .dmg
+# Triggered on push to main or manual dispatch
+
+name: Build & Release
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Windows x64 — produces .exe and .msi installer
+          - platform: windows-latest
+            target: x86_64-pc-windows-msvc
+            artifact_name: windows-x64
+
+          # Linux x64 — produces AppImage, .deb, .rpm
+          - platform: ubuntu-22.04
+            target: x86_64-unknown-linux-gnu
+            artifact_name: linux-x64
+
+          # macOS Intel — produces .dmg and .app
+          - platform: macos-latest
+            target: x86_64-apple-darwin
+            artifact_name: macos-x64
+
+          # macOS Apple Silicon — produces .dmg and .app
+          - platform: macos-latest
+            target: aarch64-apple-darwin
+            artifact_name: macos-arm64
+
+    runs-on: ${{ matrix.platform }}
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Install Linux system dependencies
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libgtk-3-dev \
+            libayatana-appindicator3-dev \
+            librsvg2-dev \
+            patchelf
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build Tauri app
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: v__VERSION__
+          releaseName: "Sentinel Core Launcher v__VERSION__"
+          releaseBody: |
+            ## Sentinel Core Launcher
+
+            ### Downloads
+            - **Windows**: `.exe` installer or `.msi`
+            - **Linux**: `.AppImage` (portable) or `.deb`
+            - **macOS**: `.dmg`
+
+            ### What's New
+            See [CHANGELOG](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for details.
+          releaseDraft: true
+          prerelease: false
+          args: --target ${{ matrix.target }}
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sentinel-launcher-${{ matrix.artifact_name }}
+          path: |
+            src-tauri/target/${{ matrix.target }}/release/bundle/**/*.exe
+            src-tauri/target/${{ matrix.target }}/release/bundle/**/*.msi
+            src-tauri/target/${{ matrix.target }}/release/bundle/**/*.AppImage
+            src-tauri/target/${{ matrix.target }}/release/bundle/**/*.deb
+            src-tauri/target/${{ matrix.target }}/release/bundle/**/*.rpm
+            src-tauri/target/${{ matrix.target }}/release/bundle/**/*.dmg
+          retention-days: 30
+          if-no-files-found: warn

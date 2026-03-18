@@ -1,0 +1,128 @@
+/* ==========================================================================
+   News Carousel — Hero banner (White-Label customizable)
+   ========================================================================== */
+
+.news-carousel {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  min-height: 200px;
+  animation: fade-in 0.4s ease;
+}
+
+.news-slide {
+  position: relative;
+  min-height: 200px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.news-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(10, 14, 23, 0.95) 0%,
+    rgba(10, 14, 23, 0.6) 40%,
+    rgba(10, 14, 23, 0.2) 100%
+  );
+  z-index: 2;
+}
+
+.news-bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+/* Animated cyberpunk grid pattern for slides without images */
+.news-pattern-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(135deg, rgba(0, 240, 255, 0.03) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(0, 240, 255, 0.03) 25%, transparent 25%),
+    linear-gradient(45deg, rgba(0, 240, 255, 0.03) 25%, transparent 25%),
+    linear-gradient(315deg, rgba(0, 240, 255, 0.03) 25%, transparent 25%);
+  background-size: 40px 40px;
+  background-position: 20px 0, 20px 0, 0 0, 0 0;
+}
+
+.news-content {
+  position: relative;
+  z-index: 3;
+  padding: var(--space-xl);
+  width: 100%;
+}
+
+.news-date {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--sentinel-border);
+  font-family: var(--font-mono);
+  margin-bottom: var(--space-xs);
+  letter-spacing: 0.05em;
+}
+
+.news-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+  line-height: 1.3;
+}
+
+.news-description {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 500px;
+}
+
+.news-dots {
+  position: absolute;
+  bottom: var(--space-md);
+  right: var(--space-xl);
+  display: flex;
+  gap: var(--space-sm);
+  z-index: 4;
+}
+
+.news-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  background: transparent;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  padding: 0;
+}
+
+.news-dot.active {
+  background: var(--sentinel-border);
+  border-color: var(--sentinel-border);
+  box-shadow: 0 0 8px var(--sentinel-glow);
+}
+
+.news-dot:hover:not(.active) {
+  border-color: var(--sentinel-border);
+  background: rgba(0, 240, 255, 0.2);
+}
+
+.news-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.news-empty-text {
+  color: var(--text-muted);
+  font-size: 13px;
+}

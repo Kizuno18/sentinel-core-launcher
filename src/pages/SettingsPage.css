@@ -1,0 +1,119 @@
+/* ==========================================================================
+   Settings Page — Toggles and build info
+   ========================================================================== */
+
+.settings-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  animation: fade-in 0.3s ease;
+}
+
+.settings-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xl);
+}
+
+.settings-section {
+  flex: 1;
+}
+
+.settings-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+/* ---------- Toggle Item ---------- */
+.toggle-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-lg);
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.toggle-item:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(0, 240, 255, 0.08);
+}
+
+.toggle-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.toggle-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.toggle-description {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ---------- Toggle Switch ---------- */
+.toggle-switch {
+  width: 42px;
+  height: 24px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+  flex-shrink: 0;
+  transition: all var(--transition-normal);
+}
+
+.toggle-switch.on {
+  background: rgba(0, 240, 255, 0.15);
+  border-color: var(--sentinel-border);
+  box-shadow: 0 0 10px var(--sentinel-glow);
+}
+
+.toggle-knob {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: all var(--transition-normal);
+}
+
+.toggle-switch.on .toggle-knob {
+  transform: translateX(18px);
+  background: var(--sentinel-border);
+  box-shadow: 0 0 8px var(--sentinel-glow);
+}
+
+/* ---------- Footer ---------- */
+.settings-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-xl);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  margin-top: auto;
+}
+
+.settings-build {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.settings-sentinel {
+  font-size: 11px;
+  color: var(--sentinel-border);
+  font-family: var(--font-mono);
+  opacity: 0.6;
+}

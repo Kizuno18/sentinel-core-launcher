@@ -1,0 +1,78 @@
+/* ==========================================================================
+   Security Metrics — Module status grid (Sentinel Core FIXED)
+   ========================================================================== */
+
+.security-metrics {
+  padding: var(--space-lg);
+  animation: slide-in-right 0.5s ease;
+}
+
+.metrics-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.metrics-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.metric-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(0, 240, 255, 0.04);
+  transition: border-color var(--transition-normal);
+}
+
+.metric-item:hover {
+  border-color: rgba(0, 240, 255, 0.1);
+}
+
+.metric-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dot-color);
+  flex-shrink: 0;
+}
+
+.status-dot.ok {
+  box-shadow: 0 0 6px var(--dot-color);
+}
+
+.status-dot.scanning {
+  animation: pulse-dot 1s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.metric-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.metric-status-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--sentinel-green);
+  font-family: var(--font-mono);
+}

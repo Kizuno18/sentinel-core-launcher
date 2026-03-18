@@ -1,0 +1,132 @@
+/* ==========================================================================
+   Twitch Streams — Stream grid with Under Development overlay
+   ========================================================================== */
+
+.twitch-streams {
+  animation: fade-in 0.5s ease;
+}
+
+.twitch-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.twitch-header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.twitch-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.twitch-dev-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px var(--space-sm);
+  background: rgba(145, 70, 255, 0.15);
+  border: 1px solid rgba(145, 70, 255, 0.3);
+  border-radius: 100px;
+  font-size: 9px;
+  font-weight: 700;
+  color: #9146ff;
+  letter-spacing: 0.1em;
+}
+
+.twitch-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+}
+
+.twitch-card {
+  overflow: hidden;
+  cursor: not-allowed;
+  opacity: 0.8;
+  transition: opacity var(--transition-normal);
+}
+
+.twitch-card:hover {
+  opacity: 1;
+}
+
+.twitch-thumbnail {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.twitch-thumbnail-pattern {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(145, 70, 255, 0.05) 0%,
+    rgba(0, 240, 255, 0.05) 50%,
+    rgba(145, 70, 255, 0.05) 100%
+  );
+}
+
+.twitch-dev-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.twitch-live-badge {
+  position: absolute;
+  top: var(--space-sm);
+  left: var(--space-sm);
+  padding: 1px 6px;
+  background: #e91916;
+  border-radius: 3px;
+  font-size: 9px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.05em;
+  z-index: 2;
+}
+
+.twitch-info {
+  padding: var(--space-sm) var(--space-md);
+}
+
+.twitch-channel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.twitch-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.twitch-game {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.twitch-viewers {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
