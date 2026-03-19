@@ -115,6 +115,11 @@ export function useLauncherState(): LauncherState {
     );
   }, []);
 
+  // Stable references for the pipeline useEffect (avoid infinite loop from object ref)
+  const manifestUrl = game.checksums.manifestUrl;
+  const hmacSecret = game.checksums.hmacSecret;
+  const basePath = game.basePath;
+
   // Real verification pipeline using Tauri commands
   useEffect(() => {
     let isCancelled = false;
@@ -128,7 +133,7 @@ export function useLauncherState(): LauncherState {
         
         let manifest;
         try {
-          manifest = await invoke<any>("fetch_checksums", { manifestUrl: game.checksums.manifestUrl });
+          manifest = await invoke<any>("fetch_checksums", { manifestUrl });
         } catch (e) {
           console.error("Failed to fetch checksums, assuming no update server or offline", e);
           // Fallback if no server
@@ -142,7 +147,7 @@ export function useLauncherState(): LauncherState {
         verifyModule(0); verifyModule(1); // Exe/Handle checks
         
         const verifyRes = await invoke<any>("verify_integrity", { 
-          basePath: game.basePath, 
+          basePath, 
           manifestFiles: manifest.files 
         });
 
@@ -150,7 +155,7 @@ export function useLauncherState(): LauncherState {
         if (verifyRes.extra && verifyRes.extra.length > 0) {
           console.warn("Foreign files detected:", verifyRes.extra);
           await invoke("report_foreign_files", { files: verifyRes.extra, hwid: "dummy-hwid" });
-          await invoke("purge_client_folder", { path: game.basePath });
+          await invoke("purge_client_folder", { path: basePath });
           
           // Since we purged everything, all files in manifest are now missing
           verifyRes.missing = manifest.files.map((f: any) => f.path);
@@ -173,12 +178,12 @@ export function useLauncherState(): LauncherState {
               await invoke("download_file", { 
                 baseUrl: manifest.baseUrl, 
                 filePath: file, 
-                targetPath: `${game.basePath}/${file}`, 
+                targetPath: `${basePath}/${file}`, 
                 expectedHash: fileData.hash, 
-                secret: game.checksums.hmacSecret 
+                secret: hmacSecret 
               });
               downloaded++;
-              setProgress(50 + Math.floor((downloaded / toDownload.length) * 40)); // 50 to 90
+              setProgress(50 + Math.floor((downloaded / toDownload.length) * 40));
             }
           }
         }
@@ -206,7 +211,7 @@ export function useLauncherState(): LauncherState {
     runPipeline();
 
     return () => { isCancelled = true; };
-  }, [game, verifyModule]);
+  }, [manifestUrl, hmacSecret, basePath, verifyModule]);
 
   // Resolve the executable path based on selected version + detected architecture
   const resolvedExecPath = (() => {

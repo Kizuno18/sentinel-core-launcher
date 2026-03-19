@@ -1,24 +1,25 @@
 <?php
 /**
- * Sentinel Core - Updater Configuration
- * 
- * Configurações para geração de checksums e download seguro.
+ * Sentinel Core - Configuracao do Updater
+ *
+ * Edite os valores abaixo de acordo com o seu servidor.
+ * Depois de configurar, nao precisa mexer mais aqui.
  */
 
 return [
-    // Chave secreta compartilhada com o Launcher (para HMAC)
-    // ATENÇÃO: Mude isso para uma string segura (ex: usar um gerador de senhas fortes)
+    // Senha compartilhada com o Launcher (HMAC)
+    // Troque por uma senha forte e avise o dev do launcher qual eh
     'shared_secret' => 'EXORDION_SENTINEL_SECRET_2026',
-    
-    // Pasta onde ficam os arquivos do client, relativa a este script
+
+    // Pasta onde ficam os arquivos do OTClient
     'client_directory' => __DIR__ . '/client',
-    
-    // URL base de onde os arquivos serão baixados (apontando pro download.php)
+
+    // URL do download.php no seu site (nao mude o ?file= no final)
     'base_url' => 'https://bravora.exordion.com.br/updater/download.php?file=',
-    
-    // Extensões de arquivo a serem ignoradas pelo gerador de checksum
+
+    // Extensoes ignoradas (nao entram no checksum)
     'ignored_extensions' => ['log', 'tmp', 'bak'],
-    
-    // Arquivos e pastas a serem ignorados completamente
+
+    // Arquivos e pastas ignorados
     'ignored_paths' => ['.git', '.gitignore', 'Thumbs.db', '.DS_Store']
 ];

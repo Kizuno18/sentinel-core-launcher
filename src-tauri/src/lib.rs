@@ -4,7 +4,7 @@ use hmac::{Hmac, Mac};
 use reqwest::Client;
 use std::fs;
 use std::io::Read;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use walkdir::WalkDir;
 
 type HmacSha256 = Hmac<Sha256>;
