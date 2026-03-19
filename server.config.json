@@ -26,7 +26,8 @@
       "defaultVersion": "dx9",
       "checksums": {
         "enabled": true,
-        "manifestUrl": "https://bravora.exordion.com.br/api/checksums.json"
+        "manifestUrl": "https://bravora.exordion.com.br/updater/checksums.json",
+        "hmacSecret": "EXORDION_SENTINEL_SECRET_2026"
       }
     },
     "socials": {

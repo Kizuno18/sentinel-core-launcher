@@ -36,6 +36,7 @@ export interface GameVersion {
 export interface ChecksumConfig {
   enabled: boolean;
   manifestUrl: string;
+  hmacSecret: string;
 }
 
 /** Game configuration — executables, versions, integrity check */

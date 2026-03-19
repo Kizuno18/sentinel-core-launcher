@@ -20,6 +20,7 @@ function StatusDot({ status }: { status: ModuleStatus["status"] }) {
 
 interface SecurityMetricsProps {
   modules: ModuleStatus[];
+  progress?: number;
 }
 
 /**
@@ -27,7 +28,7 @@ interface SecurityMetricsProps {
  * Shows the status of all 5 anti-cheat + integrity modules.
  * Now wired to useLauncherState for real pipeline progression.
  */
-function SecurityMetrics({ modules }: SecurityMetricsProps) {
+function SecurityMetrics({ modules, progress }: SecurityMetricsProps) {
   return (
     <div className="security-metrics sentinel-card">
       <h3 className="metrics-title">Security Metrics</h3>
@@ -39,7 +40,12 @@ function SecurityMetrics({ modules }: SecurityMetricsProps) {
               <span className="metric-name">{module.name}</span>
             </div>
             <span className={`metric-status-label ${module.status}`}>
-              {module.status === "ok" ? "Verified" : module.status === "scanning" ? "Scanning..." : module.status.toUpperCase()}
+              {module.status === "ok" ? "Verified" : 
+               module.status === "scanning" ? (
+                 (module.key === "integrity" && progress !== undefined && progress >= 50 && progress < 95)
+                   ? `Downloading (${progress}%)`
+                   : "Scanning..."
+               ) : module.status.toUpperCase()}
             </span>
           </div>
         ))}

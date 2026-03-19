@@ -33,7 +33,7 @@ function HomePage() {
         {/* Right column — Sentinel Core panels (fixed) */}
         <div className="home-right">
           <AntiCheatStatus status={shieldStatus} />
-          <SecurityMetrics modules={launcher.modules} />
+          <SecurityMetrics modules={launcher.modules} progress={launcher.progress} />
         </div>
       </div>
 

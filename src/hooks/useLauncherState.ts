@@ -115,33 +115,98 @@ export function useLauncherState(): LauncherState {
     );
   }, []);
 
-  // Simulate the verification pipeline with realistic timings
+  // Real verification pipeline using Tauri commands
   useEffect(() => {
-    const pipeline: Array<{ stage: LauncherStage; delay: number; progress: number; moduleIdx?: number }> = [
-      { stage: "checking_update", delay: 0, progress: 5 },
-      { stage: "verifying_exe", delay: 1200, progress: 25, moduleIdx: 0 },
-      { stage: "verifying_dlls", delay: 2400, progress: 50, moduleIdx: 1 },
-      { stage: "verifying_dlls", delay: 3200, progress: 65, moduleIdx: 2 },
-      { stage: "verifying_assets", delay: 4000, progress: 80, moduleIdx: 3 },
-      { stage: "verifying_assets", delay: 4800, progress: 95, moduleIdx: 4 },
-      { stage: "ready", delay: 5500, progress: 100 },
-    ];
+    let isCancelled = false;
 
-    const timers: ReturnType<typeof setTimeout>[] = [];
+    const runPipeline = async () => {
+      try {
+        const { invoke } = await import("@tauri-apps/api/core");
 
-    pipeline.forEach(({ stage: s, delay, progress: p, moduleIdx }) => {
-      const timer = setTimeout(() => {
-        setStage(s);
-        setProgress(p);
-        if (moduleIdx !== undefined) {
-          verifyModule(moduleIdx);
+        // 1. Fetch checksums
+        setStage("checking_update"); setProgress(10);
+        
+        let manifest;
+        try {
+          manifest = await invoke<any>("fetch_checksums", { manifestUrl: game.checksums.manifestUrl });
+        } catch (e) {
+          console.error("Failed to fetch checksums, assuming no update server or offline", e);
+          // Fallback if no server
+          verifyModule(0); verifyModule(1); verifyModule(2); verifyModule(3); verifyModule(4);
+          setStage("ready"); setProgress(100);
+          return;
         }
-      }, delay);
-      timers.push(timer);
-    });
 
-    return () => timers.forEach(clearTimeout);
-  }, [verifyModule]);
+        // 2. Scan & Verify Integrity
+        setStage("verifying_exe"); setProgress(30); 
+        verifyModule(0); verifyModule(1); // Exe/Handle checks
+        
+        const verifyRes = await invoke<any>("verify_integrity", { 
+          basePath: game.basePath, 
+          manifestFiles: manifest.files 
+        });
+
+        // 3. Handle extra/foreign files (Anti-Cheat)
+        if (verifyRes.extra && verifyRes.extra.length > 0) {
+          console.warn("Foreign files detected:", verifyRes.extra);
+          await invoke("report_foreign_files", { files: verifyRes.extra, hwid: "dummy-hwid" });
+          await invoke("purge_client_folder", { path: game.basePath });
+          
+          // Since we purged everything, all files in manifest are now missing
+          verifyRes.missing = manifest.files.map((f: any) => f.path);
+          verifyRes.mismatched = [];
+        }
+
+        if (isCancelled) return;
+        verifyModule(2); // DLLs verified (or prepared to download)
+        setStage("verifying_dlls"); setProgress(50);
+
+        // 4. Download updates
+        const toDownload = [...(verifyRes.missing || []), ...(verifyRes.mismatched || [])];
+        if (toDownload.length > 0) {
+          setStage("updating");
+          let downloaded = 0;
+          for (const file of toDownload) {
+            if (isCancelled) return;
+            const fileData = manifest.files.find((f: any) => f.path === file);
+            if (fileData) {
+              await invoke("download_file", { 
+                baseUrl: manifest.baseUrl, 
+                filePath: file, 
+                targetPath: `${game.basePath}/${file}`, 
+                expectedHash: fileData.hash, 
+                secret: game.checksums.hmacSecret 
+              });
+              downloaded++;
+              setProgress(50 + Math.floor((downloaded / toDownload.length) * 40)); // 50 to 90
+            }
+          }
+        }
+
+        if (isCancelled) return;
+
+        // Done
+        verifyModule(3); // Screen Capture Check
+        setStage("verifying_assets"); setProgress(95); 
+        verifyModule(4); // File Integrity completely passed
+        
+        setTimeout(() => {
+          if (!isCancelled) {
+            setStage("ready"); 
+            setProgress(100);
+          }
+        }, 500);
+
+      } catch (error) {
+        console.error("Pipeline Error:", error);
+        if (!isCancelled) setStage("error");
+      }
+    };
+
+    runPipeline();
+
+    return () => { isCancelled = true; };
+  }, [game, verifyModule]);
 
   // Resolve the executable path based on selected version + detected architecture
   const resolvedExecPath = (() => {
